@@ -22,6 +22,14 @@ public:
     list<int> next;
     list<EdgeT> edge_val;
     
+    Node() {}
+    
+    Node(const NodeT& data, const list<int>& next, const list<EdgeT>& edge_val) {
+        this -> data = data;
+        this -> next = next;
+        this -> edge_val = edge_val;
+    }
+    
     Node& operator= (const NodeT& node_value) const {
         data = node_value;
     }
@@ -129,7 +137,7 @@ private:
     bool _copied;
     bool _calculate_edge;
     bool _supress_warnings;
-    bool _ensure_no_duplicate;
+    bool _allow_duplicate;
     
     inline auto& _get(int u) {
         return _nodes -> at(u);
@@ -144,22 +152,22 @@ private:
     }
     
     SparseGraph(bool calculate_edge = false, bool suppress_warnings = false,
-                bool ensure_no_duplicate = false): Graph(){
+                bool allow_duplicate = false): Graph(){
         _is_sparse = true;
         _calculate_edge = calculate_edge;
         _supress_warnings = suppress_warnings;
-        _ensure_no_duplicate = ensure_no_duplicate;
+        _allow_duplicate = allow_duplicate;
     }
     
     SparseGraph(int total_node, bool calculate_edge = false,
                 bool suppress_warnings = false,
-                bool ensure_no_duplicate = false);
+                bool allow_duplicate = true);
     
     SparseGraph(vector<Node<NodeT, EdgeT>>* nodes,
                 bool calculate_edge = false,
                 bool copy_list = false,
                 bool suppress_warnings = false,
-                bool ensure_no_duplicate = false);
+                bool allow_duplicate = false);
     
 public:
     inline auto& operator[](int node_index_u) {
@@ -204,21 +212,21 @@ public:
     
     template <class NodeT, class EdgeT>
     static SparseGraph<NodeT, EdgeT>* createSparse(vector<Node<NodeT, EdgeT>>* graphNodes,
-                        bool ensure_no_duplicate = false,
+                        bool allow_duplicate = true,
                         bool calculate_edge = false,
                         bool copy_list = false,
                         bool suppress_warnings = false) {
         return new SparseGraph<NodeT, EdgeT>(graphNodes, calculate_edge, copy_list, suppress_warnings,
-                                      ensure_no_duplicate);
+                                      allow_duplicate);
     }
     
     // create a graph with adjacent list
     template <class NodeT, class EdgeT>
-    static SparseGraph<NodeT, EdgeT>* createNewSparse(int total_node, bool ensure_no_duplicate = false,
+    static SparseGraph<NodeT, EdgeT>* createNewSparse(int total_node, bool allow_duplicate = true,
                                   bool calculate_edge = false,
                                   bool suppress_warnings = false) {
         return new SparseGraph<NodeT, EdgeT>(total_node, calculate_edge, suppress_warnings,
-                                      ensure_no_duplicate);
+                                      allow_duplicate);
     }
     
 };
@@ -232,7 +240,7 @@ public:
 
 template<class NodeT, class EdgeT>
 SparseGraph<NodeT, EdgeT>::SparseGraph(int total_node, bool calculate_edge, bool suppress_warnings,
-                                       bool ensure_no_duplicate): SparseGraph<NodeT, EdgeT>(calculate_edge, suppress_warnings, ensure_no_duplicate) {
+                                       bool allow_duplicate): SparseGraph<NodeT, EdgeT>(calculate_edge, suppress_warnings, allow_duplicate) {
     _total_node = total_node;
     _copied = true;
     _nodes = new vector<Node<NodeT, EdgeT>>(total_node);
@@ -246,7 +254,7 @@ SparseGraph<NodeT, EdgeT>::SparseGraph(vector<Node<NodeT, EdgeT>>* nodes,
                                        bool calculate_edge,
                                        bool copy_list,
                                        bool suppress_warnings,
-                                       bool ensure_no_duplicate): SparseGraph<NodeT, EdgeT>(calculate_edge, suppress_warnings, ensure_no_duplicate) {
+                                       bool allow_duplicate): SparseGraph<NodeT, EdgeT>(calculate_edge, suppress_warnings, allow_duplicate) {
     _total_node = nodes -> size();
     _copied = copy_list;
     if(copy_list) {
@@ -289,10 +297,10 @@ template<class NodeT, class EdgeT>
 void SparseGraph<NodeT, EdgeT>::addEdge(int node_index_u, int node_index_v, const EdgeT& value) {
     auto& next = _get_next(node_index_u);
     auto& values = _get_value(node_index_u);
-    if(_ensure_no_duplicate) {
+    if(!_allow_duplicate) {
         if(find(next.begin(), next.end(), node_index_v) != next.end()) {
             if(!_supress_warnings) {
-                cout << "WARNING: Duplicate edges in _ensure_no_duplicate mode, the operation of adding edge will be neglected." << endl;
+                cout << "WARNING: Duplicate edges where duplicate edge is not allowed, the operation of adding edge will be neglected." << endl;
             }
         } else {
             next.push_back(node_index_v);
