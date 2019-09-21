@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "graph.hpp"
+#include "cut_vertex.hpp"
 
 using namespace std;
 
@@ -100,8 +101,29 @@ void test_s_1() {
 }
 
 
+void test_cut_vertex() {
+    auto* g = GraphFactory::createNewSparse<int, int>(10);
+    vector<pair<int, int>> e{{1, 2}, {2, 3}, {3, 4}, {3, 5},
+        {3, 6}, {6, 7}, {7, 8}, {7, 9}, {9, 10}, {1, 6}, {6, 9},
+        {6, 10}, {7, 10}
+    };
+    for(const auto& p: e) {
+        g -> addEdge(p.first - 1, p.second - 1);  // vertices indices are from 1
+        g -> addEdge(p.second - 1, p.first - 1);
+    }
+    CutVertexSolver solver;
+    cvs_result res = solver.solve(g);
+    cout << "The cut vertices are: " << endl;
+    for(auto& r: res.cut_vertex_indices) {
+        cout << r + 1 << endl;
+    }
+    delete g;
+}
+
 int main(int argc, const char * argv[]) {
-    test_s_0();
-    test_s_1();
+//    test_s_0();
+//    test_s_1();
+    test_cut_vertex();
+    
     return 0;
 }

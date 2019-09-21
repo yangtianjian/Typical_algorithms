@@ -10,5 +10,29 @@
 #define cut_vertex_hpp
 
 #include <stdio.h>
+#include <set>
+
+#include "graph.hpp"
+
+using namespace std;
+
+class cvs_result {
+public:
+    set<int> cut_vertex_indices;
+};
+
+class CutVertexSolver {
+
+private:
+    vector<int> dfn;
+    vector<int> low;
+    set<int> ans;
+    
+    void _dfnl(Graph* g, int dep, int cur_node);
+    
+public:
+    
+    cvs_result solve(Graph* g);
+};
 
 #endif /* cut_vertex_hpp */

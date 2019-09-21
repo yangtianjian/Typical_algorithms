@@ -77,6 +77,13 @@ void DenseGraph::addEdge(int node_index_u, int node_index_v, int value) {
     }
 }
 
+void DenseGraph::getNext(int node_index, list<int>& res) {
+    auto& adj_vector = _matrix -> at(node_index);
+    for(int i = 0; i < adj_vector.size(); i++) {
+        if(adj_vector[i]) res.push_back(i);
+    }
+}
+
 void DenseGraph::addEdgeFast(int node_index_u, int node_index_v, int value) {
     if(_total_edge != INVALID && mat(node_index_u, node_index_v) == _not_connected) {
         _total_edge++;

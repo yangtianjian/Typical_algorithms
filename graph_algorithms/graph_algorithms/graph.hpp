@@ -68,6 +68,8 @@ public:
     virtual int getInDegree(int node_index) = 0;
     virtual int getOutDegree(int node_index) = 0;
     virtual bool isConnect(int node_index_u, int node_index_v) = 0;
+    
+    virtual void getNext(int node_index, list<int>& res) = 0;
 };
 
 // For dense graph, we use adjacent matrix to store it
@@ -117,6 +119,7 @@ public:
     int getOutDegree(int node_index);
     void addEdge(int node_index_u, int node_index_v, int value = 1);
     void addEdgeFast(int node_index_u, int node_index_v, int value = 1);
+    void getNext(int node_index, list<int>& res);
     
     ~DenseGraph() {
         if(_matrix_is_copied) {
@@ -183,6 +186,7 @@ public:
     int getOutDegree(int node_index);
     void addEdge(int node_index_u, int node_index_v, const EdgeT& value = EdgeT());
     void addEdgeFast(int node_index_u, int node_index_v, const EdgeT& value = EdgeT());
+    void getNext(int node_index, list<int>& res);
     ~SparseGraph() {
         if(_copied) {
             delete _nodes;
@@ -328,5 +332,11 @@ void SparseGraph<NodeT, EdgeT>::addEdgeFast(int node_index_u, int node_index_v, 
         _total_edge++;
     }
 }
+
+template<class NodeT, class EdgeT>
+void SparseGraph<NodeT, EdgeT>::getNext(int node_index, list<int>& res) {
+    res = _get_next(node_index);
+}
+
 
 #endif /* graph_hpp */
