@@ -9,6 +9,9 @@
 #include "graph.hpp"
 
 
+// The implementation of sparse graph is in hpp file because sparse graph is a template class
+
+
 DenseGraph::DenseGraph(int total_node,
            int not_connected_const,
            bool calculate_edge,
@@ -95,81 +98,5 @@ int DenseGraph::getOutDegree(int node_index) {
         if(mat(node_index, i) != _not_connected) sum++;
     }
     return sum;
-}
-
-template<class NodeT>
-SparseGraph<NodeT>::SparseGraph(int total_node, bool calculate_edge, bool suppress_warnings,
-                                bool ensure_no_duplicate): SparseGraph<NodeT>(calculate_edge, suppress_warnings, ensure_no_duplicate) {
-    _total_node = total_node;
-    if(calculate_edge) {
-        _total_edge = 0;
-    }
-}
-
-template<class NodeT>
-SparseGraph<NodeT>::SparseGraph(vector<Node<NodeT>>* nodes,
-            bool calculate_edge,
-            bool copy_list,
-            bool suppress_warnings,
-            bool ensure_no_duplicate): SparseGraph<NodeT>(calculate_edge, suppress_warnings,
-                                                      ensure_no_duplicate) {
-    _total_node = nodes -> size();
-    _copied = copy_list;
-    if(copy_list) {
-        _nodes = new vector<Node<NodeT>>();
-        *_nodes = *nodes;  // copy
-    } else {
-        _nodes = nodes;
-    }
-    if(calculate_edge) {
-        _total_edge = 0;
-        for(int i = 0; i < nodes -> size(); i++) {
-            _total_edge += _get(i).next.size();
-        }
-    }
-}
-
-template<class NodeT>
-bool SparseGraph<NodeT>::isConnect(int node_index_u, int node_index_v){
-    auto& next = _get_next(node_index_u);
-    return find(next.begin(), next.end(), node_index_v) != next.end();
-}
-
-template<class NodeT>
-int SparseGraph<NodeT>::getInDegree(int node_index) {
-    int ans = 0;
-    for(int u = 0; u < _total_node; u++) {
-        for(const int& v: _get_next(u)) {
-            ans += (v == node_index);
-        }
-    }
-    return ans;
-}
-
-template<class NodeT>
-int SparseGraph<NodeT>::getOutDegree(int node_index) {
-    return _get_next(node_index).size();
-}
-
-template<class NodeT>
-void SparseGraph<NodeT>::addEdge(int node_index_u, int node_index_v) {
-    auto& next = _get_next(node_index_u);
-    if(_ensure_no_duplicate) {
-        if(find(next.begin(), next.end(), node_index_v) != next.end()) {
-            if(!_supress_warnings) {
-                cout << "WARNING: Duplicate edges in _ensure_no_duplicate mode, the operation of adding edge will be neglected." << endl;
-            }
-        } else {
-            next.push_back(node_index_v);
-        }
-    } else {
-        next.push_back(node_index_v);
-    }
-}
-
-template<class NodeT>
-void SparseGraph<NodeT>::addEdgeFast(int node_index_u, int node_index_v) {
-    auto& next = _get_next(node_index_u);
-    next.push_back(node_index_v);
 }
 
