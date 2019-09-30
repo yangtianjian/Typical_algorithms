@@ -10,9 +10,14 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include <fstream>
+#include <cstdlib>
 
 #include "graph.hpp"
 #include "cut_vertex.hpp"
+#include "Sorting.hpp"
+
+#define PATH "/Users/apple/XcodeProject/Typical_algorithms/result_and_thesis/"
 
 using namespace std;
 
@@ -101,12 +106,9 @@ void test_s_1() {
 }
 
 
-void test_cut_vertex() {
+void test_cut_vertex(vector<pair<int, int>>& e) {
     auto* g = GraphFactory::createNewSparse<int, int>(10);
-    vector<pair<int, int>> e{{1, 2}, {2, 3}, {3, 4}, {3, 5},
-        {3, 6}, {6, 7}, {7, 8}, {7, 9}, {9, 10}, {1, 6}, {6, 9},
-        {6, 10}, {7, 10}
-    };
+    
     for(const auto& p: e) {
         g -> addEdge(p.first - 1, p.second - 1);  // vertices indices are from 1
         g -> addEdge(p.second - 1, p.first - 1);
@@ -120,10 +122,106 @@ void test_cut_vertex() {
     delete g;
 }
 
+void batch_cut_vertex() {
+    vector<pair<int, int>> e1{{1, 2}, {2, 3}, {3, 4}, {3, 5},
+        {3, 6}, {6, 7}, {7, 8}, {7, 9}, {9, 10}, {1, 6}, {6, 9},
+        {6, 10}, {7, 10}
+    };
+    test_cut_vertex(e1);
+    
+//    vector<pair<int, int>> e2{{2, 5}, {2, 4}, {3, 4}, {3, 6}, {6, 2}, {2, 1}, {2, 3}};
+//    test_cut_vertex(e2);
+}
+
+void get_random(int n, vector<int>& x) {
+    for(int i = 0; i < n; i++) {
+        x[i] = rand();
+    }
+}
+
+void get_reverse(int n, vector<int>& a) {
+    get_random(n, a);
+    sort(a.begin(), a.end(), greater<int>());
+}
+
+
+void test_mergesort() {
+    vector<int> x;
+    
+    ofstream out1(string(PATH) + string("mergesort_result_random.tsv"));
+    ofstream out2(string(PATH) + string("mergesort_result_reverse.tsv"));
+    
+    out1 << "N" << "\t" << "Time(ms)" << endl;
+    out2 << "N" << "\t" << "Time(ms)" << endl;
+    
+    for(int n = 100; n <= 1000; n += 100) {
+        out1 << n << "\t";
+        x = vector<int>(n, 0);
+        get_random(n, x);
+        clock_t t0 = clock();
+        Sort<int>::runMergeSortL(x);
+        clock_t t1 = clock();
+        out1 << (t1 - t0) / (double)CLOCKS_PER_SEC * 1000.0<< endl;
+    }
+    
+    for(int n = 100; n <= 1000; n += 100) {
+        out2 << n << "\t";
+        x = vector<int>(n, 0);
+        get_reverse(n, x);
+        clock_t t0 = clock();
+        Sort<int>::runMergeSortL(x);
+        clock_t t1 = clock();
+        out2 << (t1 - t0) / (double)CLOCKS_PER_SEC * 1000.0<< endl;
+    }
+    
+    out1.close();
+    out2.close();
+}
+
+void test_quicksort() {
+    vector<int> x;
+    
+    ofstream out1(string(PATH) + string("quicksort_result_random.tsv"));
+    ofstream out2(string(PATH) + string("quicksort_result_reverse.tsv"));
+    
+    out1 << "N" << "\t" << "Time(ms)" << endl;
+    out2 << "N" << "\t" << "Time(ms)" << endl;
+    
+    for(int n = 100; n <= 1000; n += 100) {
+        out1 << n << "\t";
+        x = vector<int>(n, 0);
+        get_random(n, x);
+        clock_t t0 = clock();
+        Sort<int>::runQuickSort(x);
+        clock_t t1 = clock();
+        out1 << (t1 - t0) / (double)CLOCKS_PER_SEC * 1000.0<< endl;
+    }
+    
+    for(int n = 100; n <= 1000; n += 100) {
+        out2 << n << "\t";
+        x = vector<int>(n, 0);
+        get_reverse(n, x);
+        clock_t t0 = clock();
+        Sort<int>::runQuickSort(x);
+        clock_t t1 = clock();
+        out2 << (t1 - t0) / (double)CLOCKS_PER_SEC * 1000.0<< endl;
+    }
+    
+    out1.close();
+    out2.close();
+}
+
+
+
 int main(int argc, const char * argv[]) {
 //    test_s_0();
 //    test_s_1();
-    test_cut_vertex();
+//    batch_cut_vertex();
+    
+//  Sort<int>::runMergeSortL(x);
+    
+    test_mergesort();
+    test_quicksort();
     
     return 0;
 }

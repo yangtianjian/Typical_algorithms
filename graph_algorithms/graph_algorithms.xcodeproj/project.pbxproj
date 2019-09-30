@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1810E4EB233C493A006C78D0 /* Sorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1810E4E9233C493A006C78D0 /* Sorting.cpp */; };
 		1855F39A23335F3600970296 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1855F39923335F3600970296 /* main.cpp */; };
 		1855F3A223335FAC00970296 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1855F3A023335FAC00970296 /* graph.cpp */; };
+		1881BF7923361022005BEBA0 /* cut_vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1881BF7723361022005BEBA0 /* cut_vertex.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +26,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1810E4E9233C493A006C78D0 /* Sorting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sorting.cpp; sourceTree = "<group>"; };
+		1810E4EA233C493A006C78D0 /* Sorting.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sorting.hpp; sourceTree = "<group>"; };
 		1855F39623335F3600970296 /* graph_algorithms */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graph_algorithms; sourceTree = BUILT_PRODUCTS_DIR; };
 		1855F39923335F3600970296 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1855F3A023335FAC00970296 /* graph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graph.cpp; sourceTree = "<group>"; };
 		1855F3A123335FAC00970296 /* graph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graph.hpp; sourceTree = "<group>"; };
+		1881BF7723361022005BEBA0 /* cut_vertex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cut_vertex.cpp; sourceTree = "<group>"; };
+		1881BF7823361022005BEBA0 /* cut_vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cut_vertex.hpp; sourceTree = "<group>"; };
+		1881BF7A23363E46005BEBA0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,9 +48,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1822557823399C32003AE47E /* simple_algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				1810E4E9233C493A006C78D0 /* Sorting.cpp */,
+				1810E4EA233C493A006C78D0 /* Sorting.hpp */,
+			);
+			path = simple_algorithms;
+			sourceTree = "<group>";
+		};
 		1855F38D23335F3600970296 = {
 			isa = PBXGroup;
 			children = (
+				1822557823399C32003AE47E /* simple_algorithms */,
 				1855F39823335F3600970296 /* graph_algorithms */,
 				1855F39723335F3600970296 /* Products */,
 			);
@@ -63,6 +80,9 @@
 				1855F39923335F3600970296 /* main.cpp */,
 				1855F3A023335FAC00970296 /* graph.cpp */,
 				1855F3A123335FAC00970296 /* graph.hpp */,
+				1881BF7723361022005BEBA0 /* cut_vertex.cpp */,
+				1881BF7823361022005BEBA0 /* cut_vertex.hpp */,
+				1881BF7A23363E46005BEBA0 /* README.md */,
 			);
 			path = graph_algorithms;
 			sourceTree = "<group>";
@@ -125,6 +145,8 @@
 			files = (
 				1855F3A223335FAC00970296 /* graph.cpp in Sources */,
 				1855F39A23335F3600970296 /* main.cpp in Sources */,
+				1810E4EB233C493A006C78D0 /* Sorting.cpp in Sources */,
+				1881BF7923361022005BEBA0 /* cut_vertex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

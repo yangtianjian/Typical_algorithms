@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <set>
+#include <stack>
 
 #include "graph.hpp"
 
@@ -27,8 +28,9 @@ private:
     vector<int> dfn;
     vector<int> low;
     set<int> ans;
+    stack<pair<int, int>> stk;
     
-    void _dfnl(Graph* g, int dep, int cur_node);
+    void _dfnl(Graph* g, int dep, int cur_node, int prev_node);
     
 public:
     
