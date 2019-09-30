@@ -1,11 +1,11 @@
 # Fdb version 3
-["xdvipdfmx"] 1569834318 "sorting_summary.xdv" "sorting_summary.pdf" "sorting_summary" 1569834319
-  "sorting_summary.xdv" 1569834318 24432 99877c2c44901ab8fcea370b34a034ee "xelatex"
+["xdvipdfmx"] 1569834525 "sorting_summary.xdv" "sorting_summary.pdf" "sorting_summary" 1569834525
+  "sorting_summary.xdv" 1569834525 24452 9cf8a677a1bf57091166433c5147c956 "xelatex"
   (generated)
   "sorting_summary.pdf"
-["xelatex"] 1569834317 "sorting_summary.tex" "sorting_summary.xdv" "sorting_summary" 1569834319
+["xelatex"] 1569834523 "sorting_summary.tex" "sorting_summary.xdv" "sorting_summary" 1569834525
   "/Library/Fonts/Songti.ttc" 1550888949 66933252 bc432ad7628283e59cc866a2cb6e3437 ""
-  "/dev/null" 1569834317 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "/dev/null" 1569834523 0 d41d8cd98f00b204e9800998ecf8427e ""
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1480098689 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
@@ -99,11 +99,11 @@
   "/usr/local/texlive/2017/texmf-var/web2c/xetex/xelatex.fmt" 1569162638 3678512 7fd4945324b3b70c9c1c53e9ff79e7bc ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
   "sorting_comparison.png" 1569825836 51504 b4a1d6f34546bd825e7a60918abd0bf5 ""
-  "sorting_summary.aux" 1569834318 628 d7e220032505a35769727f9a56206a70 ""
-  "sorting_summary.out" 1569834318 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "sorting_summary.tex" 1569834315 4297 cf8171fb6c7e3e30d4d0736d8c90381c ""
+  "sorting_summary.aux" 1569834525 628 d7e220032505a35769727f9a56206a70 ""
+  "sorting_summary.out" 1569834525 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "sorting_summary.tex" 1569834523 4302 359e89b14e6d888c23bbb2933bda8508 ""
   (generated)
-  "sorting_summary.log"
-  "sorting_summary.xdv"
-  "sorting_summary.out"
   "sorting_summary.aux"
+  "sorting_summary.xdv"
+  "sorting_summary.log"
+  "sorting_summary.out"
