@@ -60,6 +60,7 @@
 		1855F38D23335F3600970296 = {
 			isa = PBXGroup;
 			children = (
+				18E1DD3D2341DE0A00076D65 /* testing */,
 				1822557823399C32003AE47E /* simple_algorithms */,
 				1855F39823335F3600970296 /* graph_algorithms */,
 				1855F39723335F3600970296 /* Products */,
@@ -77,7 +78,6 @@
 		1855F39823335F3600970296 /* graph_algorithms */ = {
 			isa = PBXGroup;
 			children = (
-				1855F39923335F3600970296 /* main.cpp */,
 				1855F3A023335FAC00970296 /* graph.cpp */,
 				1855F3A123335FAC00970296 /* graph.hpp */,
 				1881BF7723361022005BEBA0 /* cut_vertex.cpp */,
@@ -85,6 +85,14 @@
 				1881BF7A23363E46005BEBA0 /* README.md */,
 			);
 			path = graph_algorithms;
+			sourceTree = "<group>";
+		};
+		18E1DD3D2341DE0A00076D65 /* testing */ = {
+			isa = PBXGroup;
+			children = (
+				1855F39923335F3600970296 /* main.cpp */,
+			);
+			path = testing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1855F39123335F3600970296 /* Build configuration list for PBXProject "graph_algorithms" */;
+			buildConfigurationList = 1855F39123335F3600970296 /* Build configuration list for PBXProject "algorithms" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -283,7 +291,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1855F39123335F3600970296 /* Build configuration list for PBXProject "graph_algorithms" */ = {
+		1855F39123335F3600970296 /* Build configuration list for PBXProject "algorithms" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1855F39B23335F3600970296 /* Debug */,

@@ -7,6 +7,7 @@
 \usepackage{fancyhdr}
 \usepackage{bbm}
 \usepackage{graphicx}
+\usepackage{url}
 
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -19,8 +20,8 @@
 
 
 %配置区
-\newcommand{\courseName}{模式识别}
-\newcommand{\homeworkId}{\#1} %作业编号
+\newcommand{\courseName}{算法设计与分析}
+\newcommand{\homeworkId}{\#3} %作业编号
 \newcommand{\homeworkTitle}{作业\homeworkId}
 \newcommand{\studentId}{201928015059003}%学号
 \newcommand{\studentName}{杨天健}%姓名
@@ -54,243 +55,54 @@
 
 
 \question{1}
-
-\part{a}
-Based on the definition of the error rate, we have:
-\begin{align*}
-P(error) &= P(\omega_1)P(error|\omega_1) + P(\omega_2)P(error|\omega_2)\\
-         &= P(\omega_1)\int^\theta_{-\infty}p(x|\omega_1)\,dx + P(\omega_2)\int^{+\infty}_{\theta}p(x|\omega_2)\,dx
-\end{align*}
-
-
-\part{b}
-To minimize $P(error)$, a necessary condition is that the partial derivative of $P(error)$ with respect to $\theta$ is zero. Here we have to use the derivative rule of upper limit function of integral, say $g(x) = \int^x_{-\infty}f(t)\,dt \Rightarrow \frac{\,dg}{\,dx} = f(x)$, then we have:
-\begin{align*}
-  \frac{\partial P(error)}{\partial\theta} = P(\omega_1)p(\theta|\omega_1) - P(\omega_2)p(\theta|\omega_2) = 0\\
-\end{align*}
-Therefore, $P(\omega_1)p(\theta|\omega_1) = P(\omega_2)p(\theta|\omega_2)$
-
-\part{c}
-$\theta$ cannot be determined uniquely. Consider $P(x|\omega_1) = P(x|\omega_2)$ for several variables ${x_0, x_1, ...}$ and $P(\omega_1) = P(\omega_2)$. There will be serval $\theta$s that satisfy the requirement above. \\
-
-\part{d}
-The equation of part b is only the necessary condition to minimize $P(error)$. We have to check whether the second derivative of $P(error)$ with resepct to $\theta$ is more than 0.\par
-Theoratically stating, assume we have two distributions,
-\begin{align*}
-  p(x|\omega_1) \sim \mathcal N(0, 1) \\
-  p(x|\omega_2) \sim \mathcal N(1, 1) \\
-\end{align*}
-and $P(\omega_1) = P(\omega_2) = \frac{1}{2}$
-We will get $\theta = \frac{1}{2}$. In fact, the second derivative
-\begin{align*}
-  \frac{\partial P^2(error)}{\partial \theta^2} = -\theta exp(-\frac{\theta^2}{2}) + (\theta - 1)exp(-\frac{(\theta - 1)^2}{2})
-\end{align*}
-For $\theta = \frac{1}{2}$, \textbf{the second derivative will be negative}, which means, we in fact get maximum error rate.\par
-So what happens intuitively? Consider we exchange $p(x|\omega_1)$ with $p(x|\omega_2)$. The same $\theta$ will result in minimum error rather than the maximum one. In bayes decision, we have the same form as the first order partial derivative, but in that case, we will solve an \textbf{inequality} and get the boundary $\theta$. Whether we will choose $x < \theta$ or $x > \theta$ depends on the symbol(> or <) in our solution. But here, we decide $\omega_1$ roughly if $x > \theta$, which may help in an opposite way.
+I've uploaded all of my code to \url{https://github.com/yangtianjian/Typical_algorithms}. The core code is in simple\_algorithm/Sorting.hpp. In main function, main.cpp, you can uncomment the two lines: test\_mergesort and test\_quicksort. Don't forget to modity the parameter 'PATH' to fit for your local environment.
 
 \question{2}
-\part{a}
-The risk for the i-th decision is:
+I've made a comparison between linked merge sort and quicksort. For each algorithm, there are two cases. For one case, data are provided in random permutation. For another, it is given reversely. The result is provided below and \textbf{the time is given in milliseconds}: \par
 \begin{align*}
-  R(\alpha_{i}|x) =
-  \begin{cases}
-      \displaystyle\sum_{j=1}^c \mathbbm{1}(i \neq j)\lambda_{s}P(\omega_j | x) \qquad &i = 1, 2, ... c \\
-      \lambda_r \qquad &i = c + 1 \\
-  \end{cases}
+\includegraphics[scale=0.7]{sorting_comparison.png}
 \end{align*}
-The risk can be written succintly as:
-\begin{align*}
-  R(\alpha_{i}|x) =
-  \begin{cases}
-      \lambda_s (1 - P(\omega_i | x)) \qquad &i = 1, 2, ..., c \\
-      \lambda_r \qquad &i = c + 1 \\
-  \end{cases}
-\end{align*}
-We will decide $\omega_i$ if $R(\alpha_i|x) \leq R(\alpha_j|x)$, for $i, j = 1, 2, ..., c$. Then we have inequation:
-\begin{align*}
-  \begin{cases}
-      \lambda_s(1 - P(\omega_i | x)) \leq \lambda_s (1 - P(\omega_j | x)) \qquad &i, j = 1, 2, ..., c \\
-      \lambda_s(1 - P(\omega_i | x)) \leq \lambda_r \quad &i = 1, 2, ..., c \\
-  \end{cases}
-\end{align*}
-This group of inequation equals to:
-\begin{align*}
-  \begin{cases}
-      P(\omega_i | x) \geq P(\omega_j | x) \qquad &i, j = 1, 2, ..., c \quad i \neq j \\
-      P(\omega_i | x) \geq 1 - \frac{\lambda_r}{\lambda_s} &i = 1, 2, ..., c\\
-  \end{cases}
-\end{align*}
-Accordingly, we reject decision if $P(\omega_i | x) \leq 1 - \frac{\lambda_r}{\lambda_s}$.
-\part{b}
-If $\lambda_r = 0$, the rejection case $P(\omega_i | x) \leq 1$ will always be true. Thus, we will always reject to make decisions, which will make the bayes classifier useless. \\
-\part{c}
-If $\lambda_r > \lambda_s$, the acceptance case $P(\omega_i | x) \geq 1 - \frac{\lambda_r}{\lambda_s}$ will always hold true because $1 - \frac{\lambda_r}{\lambda_s} < 0$. In this case, it is the rejection that is useless. The classifier will always not to choose to reject.
+
 \question{3}
-\part{a}
-The minimax risk is:
+Whether we use an auxiliary array or a linked list, merge sort cannot be finished in-place. Another $n$-size of space is needed. Let's use $f(n)$ to indicate global variables, $g(n)$ for local variables and $T(n)$ for total space complexity. We have:
 \begin{align*}
-  R(P(\omega_1)) &= \lambda_{22} + (\lambda_{12} - \lambda_{22}) \int_{R_1}p(x|\omega_2) \, dx \\
-  &+ P(\omega_1) \bigg[ (\lambda_{11} - \lambda_{22}) - (\lambda_{21} - \lambda_{11})\int_{R_2}p(x|\omega_1) \, dx - (\lambda_{22} - \lambda_{12})\int_{R_1}p(x|\omega_2) \, dx \bigg ]
-\end{align*}
-Here is the figure: \\
-\begin{center}
-  \includegraphics[scale=0.7]{minimax.png}
-\end{center} \par
-The figure is \textbf{generated} in this way. \par
-1. For each $P(\omega_1)$, we have an optimal decision on $\mathbbm{d}$ and the risk is on the solid line. \par
-2. We set $\mathbbm{d}$ fixed and draw the dashed line. From the formula, we can see the risk is linear function with respect to $P(\omega_1)$ if $\mathbbm{d}$ is fixed. \par
-3. We enumerate $P(\omega_1)$, finally generating a solid line and many dashed lines(Only one of them is drawn in the figure). \par
-
-For a fixed $P(\omega_1) = x_0$, we have an optimal decision boundary $\mathbbm{d_0}$, and a risk value, pointed by the red arrow. However, if we have \textbf{another} $P(\omega_1) \neq x_0$ and not to adjust decision boundary, the risk value, which is on the dashed line, should be more than the optimal value on that $P(\omega_1)$. Therefore, the dashed line is on the top of the solid one and is the tangent of it. The intersection is $P(\omega_1) = x_0$. It means that the solid line is concave down.
-
-\part{b}
-Based on the formula in 3(a), we should have the coefficent of $P(\omega_1)$ to be zero. Without the loss of generality, we consider $\mu_1 < \mu_2$. For zero-one risk, we have:
-\begin{align}
-    \int_{R_2}p(x|\omega_1) \, dx &= \int_{R_1}p(x|\omega_2) \, dx \\
-    \Leftrightarrow \int^{+\infty}_{x^*} p(x|\omega_1) \,dx &= \int^{x^*}_{-\infty}p(x|\omega_2) \, dx
-\end{align}
-Consider the cdf function $\phi(x)$ of standard normal distribution density function $f(t) \sim \mathcal N(0, 1)$:
-\begin{align}
-  \phi(x) = \int^x_{-\infty} f(t) \, dt
-\end{align}
-Based on this function, the equation (2) can be written as:
-\begin{align}
-  1 - \phi(\frac{x^* - \mu_1}{\sigma_1}) &= \phi(\frac{x^* - \mu_2}{\sigma_2}) \\
-  \Leftrightarrow \phi(\frac{\mu_1 - x^*}{\sigma_1}) &= \phi(\frac{x^* - \mu_2}{\sigma_2}) \\
-  \Leftrightarrow x^* &= \frac{\mu_1 \sigma_2 + \mu_2 \sigma_1}{\sigma_1 + \sigma_2}
-\end{align}
-
-\part{c}
-The overall minimax risk is:
-\begin{align*}
-  R \,&= \, \phi(\frac{x^* - \mu_2}{\sigma_2}) \\
-    &=\, \phi(\frac{\mu_1\sigma_2 + \mu_2\sigma_1 - \mu_2\sigma_1 - \mu_2\sigma_2}{\sigma_2(\sigma_1 + \sigma_2)})x
-\end{align*}
-
-\part{d}
-Let $\mu_1 = 0$, $\mu_2 = 0.5$, $\sigma_1 = 1$, $\sigma_2 = 0.5$, we have $x^* = \frac{1}{3}$, $R = \phi(-\frac{1}{3}) \simeq 0.371$.
+  f(n) &= 2n = \Theta(n) \\
+  g(n) &= 2g(\frac{n}{2}) + \Theta(1) \, \Rightarrow \, g(n) = \Theta(n)
+\end{align*} \par
+So $T(n) &= f(n) + g(n) = \Theta(n)$. \\
 
 \question{4}
-\part{a}
-Based on bayes decision criteria, we choose $\omega_1$ if $P(\omega_1|x) > P(\omega_2|x)$. Without the loss of generality, we set $\mu_1 > \mu_2$. The prior, $P(\omega_i)$ are the same for $i = 1, 2$. Therefore, we choose $\omega_1$ if:
-\begin{align*}
-  |x - \mu_1| < |x - \mu_2|
-\end{align*} \par
-The decision boundary $x^* = \frac{\mu_1 + \mu_2}{2}$. So:
-\begin{align*}
-  P_e &= P(\omega_1)P(error | \omega_1) + P(\omega_2)P(error | \omega_2) \\
-      &= \frac{1}{2}\int^{x^*}_{-\infty}p(x | \omega_1) \, dx + \frac{1}{2}\int^{+\infty}_{x^*}p(x | \omega_2) \, dx\\
-\end{align*} \par
-We take the noraml distribution and $x^*$ into this formula, we get:
+Now we use induction method to prove the formula in the question that:
 \begin{align}
-  P_e = \phi(\frac{\mu_2 - \mu_1}{2 \sigma})
+  R[n] \leq 4cn
 \end{align} \par
-Accordingly if we set $\mu_1 < \mu_2$, there will be a negative sign in $\phi$ function. So $P_e = \phi(-\frac{|\mu_1 - \mu_2|}{2 \sigma})$. Plus, we use the equation $\phi(-x) = 1 - \phi(x)$ and $\phi(x) = \int^x_{-\infty} f(t) \, dt$. We finally get $P(error) = \frac{1}{\sqrt{2\pi}}\int^{+\infty}_a e^{-\frac{u^2}{2}} \, du$.
-\part{b} \par
-We have the inequality:
-\begin{align*}
-  0 < P_e = \frac{1}{\sqrt{2\pi}}\int^{+\infty}_a e^{-\frac{u^2}{2}} \, du\leq\frac{1}{\sqrt{2\pi}a}e^{-\frac{a^2}{2}}
-\end{align*} \par
-Plus,
-\begin{align*}
-  \lim_{x \rightarrow \infty}\frac{1}{\sqrt{2\pi}a}e^{-\frac{a^2}{2}} = 0
-\end{align*} \par
-According to squeeze theorem in calculus, $P_e$ goes to zero when $a \rightarrow +\infty$.
-
-\question{5}
-\part{a}
-By using Lagrange undetermined multipliers, we can get:
-\begin{align*}
-    H_s &= -\int p(x)lnp(x) \,dx + \displaystyle\sum_{k = 0}^q \lambda_k \bigg[ \int b_k(x)p(x) \,dx - a_k \bigg] \\
-    &= -\int p(x)lnp(x) \,dx + \int \bigg[ \displaystyle\sum_{k = 0}^q \lambda_k b_k(x) \bigg]p(x) \,dx - \displaystyle\sum_{k = 0}^q \lambda_k a_k \\
-    &= -\int p(x) \bigg[ lnp(x) - \displaystyle\sum_{k = 0}^q \lambda_k b_k(x) \bigg] \,dx - \displaystyle\sum_{k = 0}^q \lambda_k a_k \\
-\end{align*} \par
-Because we have $\int p(x) \,dx = 1$, we have another constraint, satisifing $a_0 = 1$ and $b_0(x) = 1$. \\
-\part{b}
-The derivative of $H_s$ is:
-\begin{align*}
-\frac{\partial H_s}{\partial p(x)} = - \int \bigg[ 1 + lnp(x) - \displaystyle\sum_{k = 0}^q \lambda_k b_k(x) \bigg] dx
-\end{align*} \par
-We set the integrad to be zero, then we have: \\
-\begin{align*}
-    lnp(x) &= \bigg[ \displaystyle\sum_{k = 0}^q \lambda_k b_k(x) \bigg] - 1 \\
-      p(x) &= exp \bigg( \bigg[ \displaystyle\sum_{k = 0}^q \lambda_k b_k(x) \bigg] - 1 \bigg)
-\end{align*}
-
-\question{Computer Exercise}
-
-\part{Environment \& remarks}
-The code is written in C++ and can be compiled successfully in Apple's Clang. It is based on C++ STL. Other libraries are NOT needed. \par
-Though Python might be more convenient, I decide to start from scratch to deep understand the algorithms. A little hard to read, forgive me. \par
-Data visualization is written in Python. $plot\_hist\_line.py$ is for ex1 and $plot\_matrix\_2d.py$ is for ex2. You need to install \textbf{matplotlib}, \textbf{numpy} and \textbf{pandas}.
-\part{How to run correspond code}
-Modify the \#define PATH to your path on your computer. \par
-For 1(a), uncomment the line $ex\_1a()$, and run. \par
-For 1(b) $\sim$ 1(e), uncomment the line $ex\_1()$. It calls $experiment()$ function. The paramter is the sample volume T($10^4$, $10^5$ and $10^6$) and the file name of output samples. \par
-If you want to reproduce the figure(histogram), use $plot\_hist\_line.py$. The commands are:
-\begin{align*}
-  & python \ plot\_hist\_line.py \ ex1b.txt \ ex1b.png \\
-  & python \ plot\_hist\_line.py \ ex1e1.txt \ ex1e1.png \\
-  & python \ plot\_hist\_line.py \ ex1e2.txt \ ex1e2.png \\
-\end{align*} \par
-For 2(a), the core code is in $RandomSampler.cpp$. I finish the random sampling of Nd normal distribution only based on C++ $rand()$ function. You can call $sample\_n()$ function in main.cpp to have a try. \par
-For 2(b) and (c), please uncomment the calling to $ex\_2()$ in $main()$ function. The samples will be written in file $matrix1.txt$ for $\omega_1$ and $matrix2.txt$ for $\omega_2$. The boundary is calculated by my hand and plotted in the figure with red line through the center. After running it, you should run this command and produce ex2b.png:
-\begin{align*}
-  python \ ex2b.py \\
-\end{align*} \par
-If you want to validate whether my program really generates the right distribution, you can modify the parameter \textbf{N} in $ex\_2()$ function and rerun the command above. \par
-For 2(c), every time you run $ex\_2()$, the empirical error will be output in the command line(stdout). \par
-\question{Computer Exercise 1}
-\part{a}
-  To generate $U(x_l, x_u)$ from C++ rand() function, we just use $x = rand() \, modulo \, (x_u - x_l) + x_l$, then $x \sim U(x_l, x_u)$.
-\part{b}
-  We generate $T$ samples. For each sample, we first provide an N, meaning that we will get N $x$s. To generate each $x$, we first randomize $x_l$ and $x_r$, and then uniformly generate the $x$. Those N $x$s are then averaged to form one sample. The code is in the function \textbf{experiment()}.
-\part{c \& d}
-  The histogram of the mean value of $x$s is:
-  \begin{center}
-    \includegraphics[scale=0.5]{ex1b.png}
-  \end{center} \par
-The mean value is -1.0574 and the standard deviation is 4.1754, plotted in the figure.
-\part{e}
-In the case that the sample volume is $10^5$, we calculate that $\mu \simeq -1.024$ and $\sigma \simeq 4.124$. Here is the figure:
-\begin{center}
-  \includegraphics[scale=0.5]{ex1e1.png}
-\end{center} \par
-In the case that the sample volume is $10^6$, we calculate that $\mu \simeq -0.993$ and $\sigma \simeq 4.060$. Here is the figure:
-\begin{center}
-  \includegraphics[scale=0.5]{ex1e2.png}
-\end{center} \par
-
-\question{Computer Exercise 2}
-
-\part{a}
-First, we generate 1d normal distribution from uniform distribution. Consider the uniform random variable $u$ satisfies
-\begin{align*}
-  u \sim U [0, 1] \\
-\end{align*} \par
-Based on Box muller's method, we will have a normal distributed variable $x$
-\begin{align*}
-  x = \sqrt{-2ln(u)} \, * cos(2\pi u) \sim \mathcal N (0, 1)
-\end{align*} \par
-Now, we consider the d-dimensional normal distribution. First, we sample d independent normal-distributed variables, forming a vector $\mathbf{x}$. Therefore, $\mathbf{x} \sim \mathcal N (\mathbf{0}, \mathbf{I})$. Suppose that we have a linear transformation $y = f(\mathbf{x}) = \mathbf{Ax} \sim \mathcal N(\mathbf{\mu}, \Sigma)$. The $\mathbf{A}$ must satisfy this condition:
-\begin{align*}
-  \Sigma = \mathbf{E} \big[ (\mathbf{Ax})(\mathbf{Ax})^{T} \big] = \mathbf{AE}(\mathbf{xx^T})\mathbf{A^T}
-\end{align*} \par
-$\mathbf{x}$ is a standard normal-distributed variable, so $\mathbf{E}(\mathbf{xx^T}) = I$. Thus, $\Sigma$ should satisfy $\Sigma = \mathbf{A}\mathbf{A^T}$. In this case, $\Sigma$ is symmetrical and positive-definite, so $\mathbf{A}$ should exist and will be a lower triangular matrix. We use \textbf{cholesky} method to decompose $\Sigma$ and get $\mathbf{A}$. Finally, we will use $y = f(\mathbf{x}) = \mathbf{Ax}$ as the output.
-
-\part{b \& c}
-Two gussians are plotted below with red decision boundary(The decision boundary is not calculated by program, which involves solving equation. Rather, it is calculated analytically. \textbf{It is $x_1 = 0$}):
-\begin{center}
-  \includegraphics[scale=0.5]{ex2b.png}
-\end{center} \par
-To check whether our program generates samples correctly, we try to generate 10000 samples. Here is the figure.
-\begin{center}
-  \includegraphics[scale=0.5]{ex2b2.png}
-\end{center} \par
-The empirical error rate is (Denote $\mathbf{x} = {x_1, x_2} $):
-\begin{align*}
-  \frac{1}{N} \bigg[ \displaystyle\sum_{\mathbf{x} \in \omega_1} \mathbbm{1}(x_1 < 0) + \displaystyle\sum_{\mathbf{x} \in \omega_2} \mathbbm{1}(x_1 \ge 0) \bigg]
-\end{align*} \par
-In my experiment for 100 samples, \textbf{the empirical error rate is 0.19}. But with 10000 samples, the error rate turns to 0.1582.
+The precondition is (Here we get rid of serveral unnecessary notations to make it more clearly),
+\begin{align}
+  C[n][k] &\leq cn + \frac{1}{n} \bigg( \displaystyle\sum_{1 \leq i < k} C[n - i][k - i] + \displaystyle\sum_{k < i \leq n} C[i - 1][k] \bigg) \\
+  R[n] &= max_k (C[n][k]) \\
+  c &\geq R[1]
+\end{align} \par
+To begin with, for $n = 1$, $R[1] \leq c \leq 4c$, it is true for (1). \par
+Now we have $R[p] \leq 4cp$ for each $p = 1, 2, 3, ..., n - 1$. And we start to prove. \par
+Because $R[n] &= max_k (C[n][k])$, for every $k$, $C[n][k] \leq R[n]$. So (2) can be written as:
+\begin{align}
+  C[n][k] &\leq cn + \frac{1}{n} \bigg( \displaystyle\sum_{1 \leq i < k} C[n - i][k - i] + \displaystyle\sum_{k < i \leq n} C[i - 1][k] \bigg) \\
+  &\leq cn + \frac{1}{n} \bigg( \displaystyle\sum_{1 \leq i < k}R[n - i] + \displaystyle\sum_{k < i \leq n} R[i - 1] \bigg)
+\end{align} \par
+For each $1 \leq i < k$, $n - i \leq n - 1$. And for each $k < i \leq n$, $i - 1 \leq n - 1$. By using former iteration of induction, we have $R[n - i] \leq 4c(n - i)$ and $R[i - 1] \leq 4c(i - 1)$. From(6), we come to:
+\begin{align}
+  & cn + \frac{1}{n} \bigg( \displaystyle\sum_{1 \leq i < k}R[n - i] + \displaystyle\sum_{k < i \leq n} R[i - 1] \bigg) \\
+  &\leq cn + \frac{1}{n} \bigg( \displaystyle\sum_{1 \leq i < k}4c(n - i) + \displaystyle\sum_{k < i \leq n} 4c(i - 1) \bigg) \\
+  &= cn + \frac{2c}{n} \bigg[ (2n - k)(k - 1) + (k + n - 1)(n - k) \bigg]
+\end{align} \par
+In the bracket is a quadratic polynomial respect to k. When $\frac{n + 1}{2}$, the formula can be written as:
+\begin{align}
+  &cn + \frac{2c}{n} \bigg[ (2n - k)(k - 1) + (k + n - 1)(n - k) \bigg] \\
+  & \leq cn + \frac{2c}{n} \bigg[ \frac{1}{2}(n + 1)^2 + n^2 \bigg] - 6c \\
+  & \leq cn + \frac{2c}{n} \frac{2}{3} - 6c \\
+  &= 4cn + (\frac{2}{n} - 4)c \\
+  & \leq 4cn
+\end{align} \par
+$C[n][k] &\leq 4cn$ for each $k = 1, 2, ..., p - 1$, So we have $R[n] &= max_k (C[n][k]) \leq 4cn$. So the problem is solved.
 
 \end{document}
