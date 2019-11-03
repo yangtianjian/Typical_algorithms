@@ -17,6 +17,8 @@
 #include "cut_vertex.hpp"
 #include "Sorting.hpp"
 
+#include "fft.hpp"
+
 #define PATH "/Users/apple/XcodeProject/Typical_algorithms/result_and_thesis/"
 
 using namespace std;
@@ -220,8 +222,7 @@ int main(int argc, const char * argv[]) {
     
 //  Sort<int>::runMergeSortL(x);
     
-    test_mergesort();
-    test_quicksort();
-    
+//    test_mergesort();
+//    test_quicksort();
     return 0;
 }

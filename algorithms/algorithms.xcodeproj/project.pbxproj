@@ -11,6 +11,8 @@
 		1855F39A23335F3600970296 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1855F39923335F3600970296 /* main.cpp */; };
 		1855F3A223335FAC00970296 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1855F3A023335FAC00970296 /* graph.cpp */; };
 		1881BF7923361022005BEBA0 /* cut_vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1881BF7723361022005BEBA0 /* cut_vertex.cpp */; };
+		1898C449236025FF009F6F83 /* gussian_elimination.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1898C447236025FF009F6F83 /* gussian_elimination.cpp */; };
+		18BC6B88234B412E0010B4D3 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18BC6B86234B412E0010B4D3 /* fft.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +37,10 @@
 		1881BF7723361022005BEBA0 /* cut_vertex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cut_vertex.cpp; sourceTree = "<group>"; };
 		1881BF7823361022005BEBA0 /* cut_vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cut_vertex.hpp; sourceTree = "<group>"; };
 		1881BF7A23363E46005BEBA0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1898C447236025FF009F6F83 /* gussian_elimination.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gussian_elimination.cpp; sourceTree = "<group>"; };
+		1898C448236025FF009F6F83 /* gussian_elimination.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gussian_elimination.hpp; sourceTree = "<group>"; };
+		18BC6B86234B412E0010B4D3 /* fft.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fft.cpp; sourceTree = "<group>"; };
+		18BC6B87234B412E0010B4D3 /* fft.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = fft.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,8 @@
 			children = (
 				1810E4E9233C493A006C78D0 /* Sorting.cpp */,
 				1810E4EA233C493A006C78D0 /* Sorting.hpp */,
+				18BC6B86234B412E0010B4D3 /* fft.cpp */,
+				18BC6B87234B412E0010B4D3 /* fft.hpp */,
 			);
 			path = simple_algorithms;
 			sourceTree = "<group>";
@@ -60,6 +68,7 @@
 		1855F38D23335F3600970296 = {
 			isa = PBXGroup;
 			children = (
+				1898C4462360251A009F6F83 /* linear_algebra */,
 				18E1DD3D2341DE0A00076D65 /* testing */,
 				1822557823399C32003AE47E /* simple_algorithms */,
 				1855F39823335F3600970296 /* graph_algorithms */,
@@ -85,6 +94,15 @@
 				1881BF7A23363E46005BEBA0 /* README.md */,
 			);
 			path = graph_algorithms;
+			sourceTree = "<group>";
+		};
+		1898C4462360251A009F6F83 /* linear_algebra */ = {
+			isa = PBXGroup;
+			children = (
+				1898C447236025FF009F6F83 /* gussian_elimination.cpp */,
+				1898C448236025FF009F6F83 /* gussian_elimination.hpp */,
+			);
+			path = linear_algebra;
 			sourceTree = "<group>";
 		};
 		18E1DD3D2341DE0A00076D65 /* testing */ = {
@@ -153,6 +171,8 @@
 			files = (
 				1855F3A223335FAC00970296 /* graph.cpp in Sources */,
 				1855F39A23335F3600970296 /* main.cpp in Sources */,
+				1898C449236025FF009F6F83 /* gussian_elimination.cpp in Sources */,
+				18BC6B88234B412E0010B4D3 /* fft.cpp in Sources */,
 				1810E4EB233C493A006C78D0 /* Sorting.cpp in Sources */,
 				1881BF7923361022005BEBA0 /* cut_vertex.cpp in Sources */,
 			);
